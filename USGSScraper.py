@@ -83,10 +83,10 @@ def save_to_excel(df, filename, sheet_name):
 
 def main():
     
-    if len(sys.argv) >= 3:
+    if len(sys.argv) >= 3 and sys.argv[1] and sys.argv[2]:
         start_date_str = sys.argv[1]
         end_date_str = sys.argv[2]
-    elif len(sys.argv) == 2:
+    elif len(sys.argv) == 2 and sys.argv[1]:
         start_date_str = sys.argv[1]
         end_date_str = start_date_str
     else:
@@ -125,6 +125,8 @@ def main():
 
     if save_to_excel(df, filename, sheet_name):
         print(f"Data saved to {filename} (sheet: {sheet_name})")
+        # Temporary Debug Log
+        print(all_data)
     else:
         print("No data written.")
 
