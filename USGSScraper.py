@@ -90,10 +90,10 @@ def main():
         start_date_str = sys.argv[1]
         end_date_str = start_date_str
     else:
-        today_str = datetime.today().strftime("%Y-%m-%d")
-        start_date_str = today_str
-        end_date_str = today_str
-        print(f"Defaulting to today's date: {today_str}")
+        yesterday_str = (datetime.today() - timedelta(days=1)).strftime("%Y-%m-%d")
+        start_date_str = yesterday_str
+        end_date_str = yesterday_str
+        print(f"Defaulting to yesterday's date: {yesterday_str}")
 
 
     try:
