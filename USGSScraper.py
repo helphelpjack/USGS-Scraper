@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 import requests
 from lxml import html
 import pandas as pd
@@ -81,8 +82,19 @@ def save_to_excel(df, filename, sheet_name):
     return True
 
 def main():
-    start_date_str = input("Enter start date (YYYY-MM-DD): ")
-    end_date_str = input("Enter end date (YYYY-MM-DD): ")
+    
+    if len(sys.argv) >= 3:
+        start_date_str = sys.argv[1]
+        end_date_str = sys.argv[2]
+    elif len(sys.argv) == 2:
+        start_date_str = sys.argv[1]
+        end_date_str = start_date_str
+    else:
+        today_str = datetime.today().strftime("%Y-%m-%d")
+        start_date_str = today_str
+        end_date_str = today_str
+        print(f"Defaulting to today's date: {today_str}")
+
 
     try:
         start_date = datetime.strptime(start_date_str, "%Y-%m-%d")

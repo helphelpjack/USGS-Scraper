@@ -4,6 +4,15 @@ on:
   schedule:
     - cron: '0 12 * * *' # 8:00 am EST
   workflow_dispatch: # manual trigger
+    inputs:
+      start_date:
+        description: 'Start date (YYYY-MM-DD)'
+        required: false
+        default: ''
+      end_date:
+        description: 'End date (YYYY-MM-DD)'
+        required: false
+        default: ''
 
 jobs:
   run-scraper:
@@ -24,4 +33,11 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run scraper
-        run: python USGSScraper.py
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "Manual run with inputs..."
+            python USGSScraper.py "${{ github.event.inputs.start_date }}" "${{ github.event.inputs.end_date }}"
+          else
+            echo "Scheduled run with default dates..."
+            python USGSScraper.py
+          fi
